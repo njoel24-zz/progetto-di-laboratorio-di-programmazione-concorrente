@@ -1,0 +1,83 @@
+Progetto
+
+         Corso LPcA - Anno Accademico 2001-2002
+
+1  Modalità di Realizzazione e Consegna
+
+   Il progetto può essere svolto da chi ha ottenuto almeno il 70% delle presenze oppure dagli studenti lavoratori
+   o infine da chi ha avuto (documentati) problemi di salute. 
+   Il progetto deve essere svolto individualmente. Non sono ammessi progetti di gruppo. Il docente avrà cura di
+   constatare, mediante discussione del progetto, che il candidato abbia personalmente scritto il codice
+   presentato. 
+   Il codice deve essere adeguatamente commentato ed essere corredato di una relazione di non più di 10
+   pagine che descriva le scelte effettuate nella progettazione, le principali classi definite e il funzionamento
+   complessivo (possibilmente anche il dump di una sessione che mostri il funzionamento corretto del codice). 
+   Il progetto deve essere presentato, durante una sessione d'esame, entro l'inizio del Settembre 2002. Il
+   docente provvedera contattare lo studente via e-mail per fissare un appuntamento per il colloquio. 
+   La consegna avviene spedendo via email al seguente indirizzo: chiara@di.unipi.it un messaggio con subject:
+   "Progetto LPcA" e con in attachment un file .tar contenente i sorgenti del progetto e consegnando, presso la
+   cassetta postale della docente al centralino del Dipartimento (in Corso Italia), la relazione cartacea. 
+   Durante la realizzazione del progetto, il candidato può rivolgersi alla docente nell'orario di Ricevimento
+   indicato sulla pagina WEB, che comunque è tenuto a consultare per verificare la presenza di nuovi avvisi. 
+   Per ottenere un punteggio pieno è necessario scrivere due versioni del programma: una che utilizza la
+   libreria JCSP ed una che utilizza esclusivamente i thread. 
+   Può svolgere solo una delle due parti chi ha ottenuto almeno 15 ad uno dei compitini. In tal caso il voto finale
+   sarà la media tra il voto del progetto e il voto di uno dei compitini. Rientra in questa categoria anche chi ha
+   ottenuto la sufficienza nei compitini e vuole migliorare il voto. Contattare in ogni caso il docente prima di
+   intraprendere qualsiasi azione spontanea riguardo al progetto; 
+
+Il Progetto è ora stabile; tuttavia si invitano gli studenti a visitarne la pagina per cogliere eventuali nuovi
+suggerimenti. 
+
+2  PROVE UFFICIALI DEL GRAN PREMIO
+
+Vogliamo simulare le prove libere che precedono il Gran Premio e che servono per stabilire la griglia di partenza
+della gara. 
+
+Ogni pilota ha a disposizione un certo numero di giri per stabilire il suo miglior tempo. Guardando il miglior tempo di
+ciascun pilota, viene stabilita la graduatoria finale, ovvero la griglia di partenza. La graduatoria parziale viene invece
+aggiornata ogni volta che un pilota ha completato un giro e ha migliorato il suo tempo precedente. 
+
+3   Descrizione del Progetto
+
+Il programma prende in ingresso il parametro n che dà il numero di piloti e un parametro intero k che rappresenta il
+numero di giri a disposizione di ogni pilota. 
+Ogni volta che un pilota ha finito uno dei k giri a sua disposizione, la graduatoria (posizione e tempo di ogni pilota)
+deve essere aggiornata (e quindi riordinata) e stampata sullo schermo del contenuto aggiornato della stessa. Tutto
+questo fino alla terminazione dei k giri per ognuno degli n piloti. 
+
+[ Solo per i thread] Ogni volta che un pilota (supponiamo il pilota i) ottiene la prima posizione (pole position),
+smette di correre per riprendere solo nel caso che un altro pilota (supponiamo il pilota j) la ottenga al posto suo. In
+questo caso è il pilota j a smettere di correre. 
+
+[ Solo per i thread] In ogni momento, ci saranno al più n-1 piloti che corrono per arrivare alla prima posizione e un
+pilota che è primo ed è fermo. Una volta che tutti gli n-1 piloti avranno finito i giri a loro disposizione, si potrà
+stampare la graduatoria finale, almeno per quanto riguarda i tempi, dalla seconda in poi. A questo punto, il pilota in
+prima posizione potrà finire i suoi giri e migliorare il suo tempo oppure rinunciare ai giri successivi. In ogni caso sarà
+in grado di stampare la graduatoria definitiva, compresi i tempi. 
+
+[ Per i processi ] Nota che nel caso dell'implementazione tramite processi, si suppone che i piloti non si fermino,
+anche se sono in prima posizione. Questo dovrebbe semplificare le cose. 
+
+Più in dettaglio, ogni pilota i ad ogni giro, deve fare: 
+
+   un pit stop (una sleep); 
+   un nuovo giro (Suggerimento: usare la stampa di m numeri consecutivi, per simulare la corsa); 
+   l'eventuale aggiornamento. Prendendo il tempo all'inizio e alla fine della corsa, confronta il tempo attuale con
+   quello precedente; se è migliore, aggiorna la classifica (posizione e tempo) e ne stampa il contenuto,
+   altrimenti conserva il tempo precedente. 
+   [ Solo per i thread] Se oltre ad aver migliorato il tempo, il pilota si trova ad occupare la prima posizione, il
+   pilota si ferma. Allo stesso tempo, se qualcuno prima di lui era primo e quindi fermo, sarà necessario
+   avvertirlo per permettergli di continuare la gara per la pole position. 
+   [ Solo per i thread] Se invece è il pilota i ad essere stato fermo per ultimo, deve controllare se ha ancora
+   la prima posizione e se gli altri piloti sono ancora in corsa. Dovrà inoltre decidere se effettuare gli ultimi giri
+   o terminare la corsa. 
+   [ Per i processi] Come già detto sopra, anche se il pilota ottiene la prima posizione, non si ferma. 
+
+Realizzare i piloti come thread o processi JCSP, utilizzando gli opportuni meccanismi concorrenti. 
+
+   Nel caso dei Processi JCSP, si utilizzi in particolare un Processo gestore Direttore_di_Gara che gestisca la
+   classifica e le comunicazioni con i processi piloti e centralizzi i controlli. 
+   Nel caso dei Thread, si utilizzi in particolare una classe Classifica che contenga la graduatoria e tutte le
+   altre strutture dati condivise tra i thread piloti, compresi gli opportuni metodi per gestirle e gli opportuni
+   meccanismi di sincronizzazione. 
